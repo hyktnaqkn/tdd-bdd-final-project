@@ -38,3 +38,29 @@ Scenario: Create a Product
     And I should see "True" in the "Available" dropdown
     And I should see "Tools" in the "Category" dropdown
     And I should see "34.95" in the "Price" field
+
+
+Scenario: Update a Product
+    Given the following products
+        | name    | description     | price  | available | category   |
+        | Hat     | A red fedora    | 59.95  | True      | CLOTHS     |
+    When I visit the "Home Page"
+    And I set the "Name" to "Hammer"
+    And I set the "Description" to "Claw hammer"
+    And I select "True" in the "Available" dropdown
+    And I select "Tools" in the "Category" dropdown
+    And I set the "Price" to "34.95"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see the message "Success"
+    And I should see "Hammer" in the "Name" field
+    When I change "Name" to "Sledge"
+    And I change "Price" to "49.99"
+    And I press the "Update" button
+    Then I should see the message "Success"
+    And I should see "Sledge" in the "Name" field
+    And I should see "49.99" in the "Price" field
