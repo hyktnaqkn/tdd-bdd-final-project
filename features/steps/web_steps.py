@@ -104,7 +104,21 @@ def step_impl(context, element_name):
 # to get the element id of any button
 ##################################################################
 
-## UPDATE CODE HERE ##
+@when('I press the "{button_name}" button')
+def step_impl(context, button_name):
+    button_id = button_name.lower() + '-btn'
+    button = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.element_to_be_clickable((By.ID, button_id))
+    )
+    button.click()
+
+@then('I should see the message "Success"')
+def step_impl(context):
+    message_element = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.presence_of_element_located((By.ID, "flash_message"))
+    )
+    assert 'Success' in message_element.text
+
 
 ##################################################################
 # This code works because of the following naming convention:
